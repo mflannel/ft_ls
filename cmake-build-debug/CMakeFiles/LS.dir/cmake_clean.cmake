@@ -62,6 +62,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/LS.dir/libft/ft_swap.c.o"
   "CMakeFiles/LS.dir/libft/ft_tolower.c.o"
   "CMakeFiles/LS.dir/libft/ft_toupper.c.o"
+  "CMakeFiles/LS.dir/checkers.c.o"
   "CMakeFiles/LS.dir/main.c.o"
   "LS.pdb"
   "LS"

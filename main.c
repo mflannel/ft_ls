@@ -1,59 +1,50 @@
 #include "ls.h"
 #include <stdio.h>
+#include <time.h>
 
 //-l, -R, -a, -r and -t.
+//10 - ссылка (нужно вытянуть имя файла, на которое ссылается)
+//4 - папка, рекурсивно открыть
 
-int main(int ac, char **av)
-{
-    t_options command;
+int main(int ac, char **av) {
+	t_options command;
+	int check = 0;
+	DIR *directory;
+//	struct dirrent *directory_content;
+	struct stat statCopy;
+	struct dirent *direntCopy;
 
-    if(!check_flags(av, command))
-     start_usage();
-    else
-        printf("command executed\n");
-        //execute_command(av, command);
+	check = check_flags(av, command);
+
+	if (check == 0)
+		start_usage();
+	else {
+		printf("command executed\n");
+		directory = opendir("../");
+		while ((direntCopy = readdir(directory)))
+		{
+		ft_putstr(direntCopy->d_name);
+			printf("\n%d\n", direntCopy->d_type);
+		stat("/", &statCopy);
+		printf("\n%s\n", ctime(&statCopy.st_mtime));
+		printf("\n%d\n", statCopy.st_mode);
+
+		}
+		closedir(directory);
+	}
+	directory = opendir("/");
+         return (0);
 }
+//    printf("%d\n", command.l);
+//    printf("%d\n", command.R);
+//    printf("%d\n", command.a);
+//    printf("%d\n", command.r);
+//    printf("%d\n", command.t);
 
-void start_usage()
-{
-    ft_putstr("usage: ls [-@ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1%] [file ...]\n");
-}
+//char *recursive_listing()
+//{
+//
+//}
 
-int check_flags(char **av, t_options command)
-{
-    int i;
-
-    i = 0;
-
-    if((char)av[1][0] != '-')
-        return (0);
-    i++;
-
-    while (av[1][i] != '\0')
-    {
-        if ((char)av[1][i] != 'l' && (char)av[1][i] != 'R' &&
-        (char)av[1][i] != 'a' &&
-        (char)av[1][i] != 'r' &&
-        (char)av[1][i] != 't')
-            return (0);
-
-            if((char)av[1][i] == 'l')
-                command.l = 1;
-            if((char)av[1][i] == 'R')
-                command.R = 1;
-            if((char)av[1][i] == 'a')
-                command.a = 1;
-            if((char)av[1][i] == 'r')
-                command.r = 1;
-            if((char)av[1][i] == 't')
-                command.t = 1;
-        i++;
-    }
-    printf("%d\n", command.l);
-    printf("%d\n", command.R);
-    printf("%d\n", command.a);
-    printf("%d\n", command.r);
-    printf("%d\n", command.t);
-}
 
 
